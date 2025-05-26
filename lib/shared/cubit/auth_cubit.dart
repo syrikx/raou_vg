@@ -37,6 +37,27 @@ class AuthCubit extends Cubit<User?> {
     }
   }
 
+  /// Apple 로그인 시도 및 상태 반영
+  Future<void> signInWithApple() async {
+    try {
+      final user = await _authService.signInWithApple();
+      if (user == null) return;
+
+      final isNew = await _authService.isNewUser(user.uid);
+      if (isNew) {
+        await _authService.createUserDoc(user);
+        UIHelper.showSnack('환영합니다, ${user.displayName ?? user.email}님!');
+      } else {
+        UIHelper.showSnack(
+            '다시 오신 걸 환영합니다, ${user.displayName ?? user.email}님!');
+      }
+
+      emit(user);
+    } catch (e) {
+      UIHelper.showSnack('Apple 로그인 실패: $e');
+    }
+  }
+
   /// 로그아웃 처리
   Future<void> signOut() async {
     await _authService.signOut();
