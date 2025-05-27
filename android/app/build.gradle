@@ -29,9 +29,15 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+	println "🔧 Using Flutter build config:"
+	println "   → minSdkVersion     = ${flutter.minSdkVersion}"
+	println "   → targetSdkVersion  = ${flutter.targetSdkVersion}"
+	println "   → ndkVersion        = ${flutter.ndkVersion}"
+
     namespace "com.innoview.raou.raou"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    // ndkVersion flutter.ndkVersion
+    ndkVersion "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -51,7 +57,8 @@ android {
         applicationId "com.innoview.raou.raou"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        // minSdkVersion flutter.minSdkVersion
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
